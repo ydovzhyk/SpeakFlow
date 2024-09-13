@@ -1,0 +1,78 @@
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  65% {
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  95% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.playMode {
+  background-color: #2a2f55;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+
+  &__iconWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    border-radius: 50%;
+    border: 1px solid white;
+    cursor: pointer;
+  }
+}
+
+.recordingButton {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: red;
+  animation: blink 2s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recordingText {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  color: white;
+}

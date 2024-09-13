@@ -1,0 +1,23 @@
+.wave_container {
+  display: flex;
+  align-items: center;
+}
+
+.wave_bar {
+  width: 1px;
+  margin: 0 1px;
+  background-color: #fff;
+  animation: wave-animation 0.5s infinite ease-in-out;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.5);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}

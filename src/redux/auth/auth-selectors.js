@@ -1,0 +1,10 @@
+export const getLoginPanel = ({ auth }) => auth.isLoginPanel;
+export const getLogin = ({ auth }) => auth.isLogin;
+export const getIsRefreshing = ({ auth }) => auth.isRefreshing;
+export const getSid = ({ auth }) => auth.sid;
+export const getAccessToken = ({ auth }) => auth.accessToken;
+export const getRefreshToken = ({ auth }) => auth.refreshToken;
+export const getErrorAuth = ({ auth }) => auth.error;
+export const getMessageAuth = ({ auth }) => auth.message;
+export const getUser = ({ auth }) => auth.user;
+export const getLoadingAuth = ({ auth }) => auth.loading;

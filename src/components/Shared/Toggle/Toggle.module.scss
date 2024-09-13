@@ -1,0 +1,37 @@
+.toggle {
+  display: flex;
+  flex-direction: row;
+
+  &__left {
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    border: 1px solid white;
+    border-right: none;
+    border-radius: 15px 0 0 15px;
+    cursor: pointer;
+  }
+  &__right {
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    border: 1px solid white;
+    border-left: none;
+    border-radius: 0 15px 15px 0;
+    cursor: pointer;
+  }
+  &__active {
+    background-color: white;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,31 @@
+.languagePanel {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.select {
+  padding-left: 10px;
+  padding-right: 5px;
+  width: 160px;
+  height: 35px;
+  border-radius: 10px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  color: #2a2f55;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}

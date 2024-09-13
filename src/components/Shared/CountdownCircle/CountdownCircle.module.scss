@@ -1,0 +1,52 @@
+.countdown_circle {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  top: calc(100vh / 2 - 85px);
+  left: calc(100vw / 2 - 85px);
+  width: 170px;
+  min-height: 170px;
+  background-color: transparent;
+  z-index: 1200;
+  background-color: #2a2f55;
+  border-radius: 50%;
+}
+
+.circular_chart {
+  max-width: 170px;
+  max-height: 170px;
+}
+
+.circle_bg {
+  fill: none;
+  stroke: azure;
+  stroke-width: 2;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2;
+  stroke: #2a2f55;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s ease;
+}
+
+.circle_stop {
+  display: none;
+}
+
+.percentage {
+  font-size: 0.9em;
+  font-weight: 600;
+  text-anchor: middle;
+  fill: azure;
+}
+
+.word {
+  font-size: 0.4em;
+  font-weight: 400;
+  text-anchor: middle;
+  fill: azure;
+}
