@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useSocket from "../useSocket";
-import useAudioRecorder from "../useAudioRecorder";
+import useSocket from "../../useSocket";
+import useAudioRecorder from "../../helpers/useAudioRecorder_old";
 import AudioVisualizer from "../Shared/AudioVisualizer/AudioVisualizer";
 import {
   getTextArray,
@@ -18,7 +18,7 @@ import {
 import Toggle from "../Shared/Toggle/Toggle";
 import PlayModePanel from "../PlayModePanel/PlayModePanel";
 import SelectLanguagePanel from "../SelectLanguagePanel/SelectLanguagePanel";
-import Logo from "../Shared/logo/logo";
+// import Logo from "../Shared/logo/logo";
 import Timer from "../Shared/Timer/Timer";
 import image01 from "../../images/copy.png";
 import image02 from "../../images/paste.png";
@@ -32,6 +32,7 @@ const RecordWindow = () => {
   const activeBtn = useSelector(getActiveBtn);
   const deepgramStatus = useSelector(getDeepgramStatus);
   const { initialize, sendAudio, pause, disconnect } = useSocket();
+  const [sourceState, setSourceState] = useState("speaker");
   const {
     startRecording,
     stopRecording,
@@ -42,18 +43,19 @@ const RecordWindow = () => {
     sourceNodeMic,
     sourceNodeSpeaker,
   } = useAudioRecorder({
-    dataCb: (audioData, sampleRate) => sendAudio(audioData, sampleRate),
+    dataCb: (audioData, sampleRate, sourceType) => {
+      sendAudio(audioData, sampleRate, sourceType);
+      setSourceState(sourceType);
+    },
   });
 
   const textArray = useSelector(getTextArray);
   const textareaRef = useRef(null);
   const [typedText, setTypedText] = useState("");
-  const [currentTranscriptionIndex, setCurrentTranscriptionIndex] = useState(0);
 
   const textTranslatedArray = useSelector(getTextTranslatedArray);
   const thirdTextareaRef = useRef(null);
   const [translatedText, setTranslatedText] = useState("");
-  const [currentTranslatedIndex, setCurrentTranslatedIndex] = useState(0);
 
   const secondTextareaRef = useRef(null);
   const [copiedText, setCopiedText] = useState("");
@@ -61,44 +63,102 @@ const RecordWindow = () => {
   const [isOperatonBtnActive, setIsOperatonBtnActive] = useState(false);
 
   useEffect(() => {
-    let interval;
-    let index = currentTranscriptionIndex;
-    let text = typedText;
+    if (textArray.length === 0) {
+      setTypedText("");
+      return;
+    }
+    const oldSentences = textArray.slice(0, textArray.length - 1).join(" ");
+    const newSentence = textArray[textArray.length - 1];
+    const newSentenceWords = newSentence.split(" ");
 
-    const typeText = () => {
-      if (index < textArray.length) {
-        text = text + textArray[index];
-        setTypedText(text);
-        index++;
-        setCurrentTranscriptionIndex(index);
-      } else {
-        clearInterval(interval);
+    let currentText = oldSentences;
+
+    const addWord = (index) => {
+      if (index < newSentenceWords.length) {
+        currentText +=
+          (currentText.length > 0 ? " " : "") + newSentenceWords[index];
+        setTypedText(currentText);
+        setTimeout(() => addWord(index + 1), 70);
       }
     };
 
-    interval = setInterval(typeText, 50);
-    return () => clearInterval(interval);
-  }, [textArray, currentTranscriptionIndex, typedText]);
+    setTypedText(oldSentences);
+    setTimeout(() => addWord(0), 70);
+
+    return () => {
+      clearTimeout();
+    };
+  }, [textArray]);
 
   useEffect(() => {
-    let interval;
-    let index = currentTranslatedIndex;
-    let text = translatedText;
+    if (textTranslatedArray.length === 0) {
+      setTranslatedText("");
+      return;
+    }
+    const oldSentences = textTranslatedArray
+      .slice(0, textTranslatedArray.length - 1)
+      .join(" ");
+    const newSentence = textTranslatedArray[textTranslatedArray.length - 1];
+    const newSentenceWords = newSentence.split(" ");
 
-    const typeText = () => {
-      if (index < textTranslatedArray.length) {
-        text = text + textTranslatedArray[index];
-        setTranslatedText(text);
-        index++;
-        setCurrentTranslatedIndex(index);
-      } else {
-        clearInterval(interval);
+    let currentText = oldSentences;
+
+    const addWord = (index) => {
+      if (index < newSentenceWords.length) {
+        currentText +=
+          (currentText.length > 0 ? " " : "") + newSentenceWords[index];
+        setTranslatedText(currentText);
+        setTimeout(() => addWord(index + 1), 70);
       }
     };
 
-    interval = setInterval(typeText, 50);
-    return () => clearInterval(interval);
-  }, [textTranslatedArray, currentTranslatedIndex, translatedText]);
+    setTranslatedText(oldSentences);
+    setTimeout(() => addWord(0), 70);
+
+    return () => {
+      clearTimeout();
+    };
+  }, [textTranslatedArray]);
+
+  // useEffect(() => {
+  //   let interval;
+  //   let index = currentTranscriptionIndex;
+  //   let text = typedText;
+
+  //   const typeText = () => {
+  //     if (index < textArray.length) {
+  //       text = text + textArray[index];
+  //       setTypedText(text);
+  //       index++;
+  //       setCurrentTranscriptionIndex(index);
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   };
+
+  //   interval = setInterval(typeText, 50);
+  //   return () => clearInterval(interval);
+  // }, [textArray, currentTranscriptionIndex, typedText]);
+
+  // useEffect(() => {
+  //   let interval;
+  //   let index = currentTranslatedIndex;
+  //   let text = translatedText;
+
+  //   const typeText = () => {
+  //     if (index < textTranslatedArray.length) {
+  //       text = text + textTranslatedArray[index];
+  //       setTranslatedText(text);
+  //       index++;
+  //       setCurrentTranslatedIndex(index);
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   };
+
+  //   interval = setInterval(typeText, 50);
+  //   return () => clearInterval(interval);
+  // }, [textTranslatedArray, currentTranslatedIndex, translatedText]);
 
   //прокрутка тексту в textarea до низу
   useEffect(() => {
@@ -133,46 +193,84 @@ const RecordWindow = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (activeBtn === "play" && !isPaused && !isRecording) {
-      initialize();
-      startRecording();
-      dispatch(setNotifacation(true));
+  // useEffect(() => {
+  //   if (activeBtn === "play" && !isPaused && !isRecording) {
+  //     console.log("В основному спрацбовує в першому play");
+  //     initialize();
+  //     startRecording();
+  //     dispatch(setNotifacation(true));
+  //   }
+  //   if (activeBtn === "play" && isPaused && isRecording) {
+  //     console.log("В основному спрацбовує в другому play");
+  //     togglePauseResume();
+  //     pause(false);
+  //     dispatch(setRecBtn(true));
+  //   }
+  //   if (activeBtn === "pause" && !isPaused && isRecording) {
+  //     togglePauseResume();
+  //     pause(true);
+  //     dispatch(setRecBtn(false));
+  //   }
+  //   if (activeBtn === "stop") {
+  //     if (deepgramStatus) {
+  //       stopRecording();
+  //       disconnect();
+  //       dispatch(setRecBtn(false));
+  //       dispatch(setNotifacation(false));
+  //       dispatch(setConfirmation(false));
+  //     } else {
+  //       return;
+  //     }
+  //   }
+  // }, [
+  //   dispatch,
+  //   activeBtn,
+  //   deepgramStatus,
+  //   disconnect,
+  //   initialize,
+  //   isPaused,
+  //   isRecording,
+  //   pause,
+  //   startRecording,
+  //   stopRecording,
+  //   togglePauseResume,
+  // ]);
+
+  const handleActiveBtnChange = (btnType) => {
+    switch (btnType) {
+      case "play":
+        if (!isPaused && !isRecording) {
+          initialize();
+          startRecording();
+          dispatch(setNotifacation(true));
+        } else if (isPaused && isRecording) {
+          togglePauseResume();
+          pause(false);
+          dispatch(setRecBtn(true));
+        }
+        break;
+      case "pause":
+        if (activeBtn === "pause" && !isPaused && isRecording) {
+          togglePauseResume();
+          pause(true);
+          dispatch(setRecBtn(false));
+        }
+        break;
+      case "stop":
+        if (activeBtn === "stop") {
+          if (deepgramStatus) {
+            stopRecording();
+            disconnect();
+            dispatch(setRecBtn(false));
+            dispatch(setNotifacation(false));
+            dispatch(setConfirmation(false));
+          }
+        }
+        break;
+      default:
+        break;
     }
-    if (activeBtn === "play" && isPaused && isRecording) {
-      togglePauseResume();
-      pause(false);
-      dispatch(setRecBtn(true));
-    }
-    if (activeBtn === "pause" && !isPaused && isRecording) {
-      togglePauseResume();
-      pause(true);
-      dispatch(setRecBtn(false));
-    }
-    if (activeBtn === "stop") {
-      if (deepgramStatus) {
-        stopRecording();
-        disconnect();
-        dispatch(setRecBtn(false));
-        dispatch(setNotifacation(false));
-        dispatch(setConfirmation(false));
-      } else {
-        return;
-      }
-    }
-  }, [
-    dispatch,
-    activeBtn,
-    deepgramStatus,
-    disconnect,
-    initialize,
-    isPaused,
-    isRecording,
-    pause,
-    startRecording,
-    stopRecording,
-    togglePauseResume,
-  ]);
+  };
 
   const handleSave = async () => {};
 
@@ -218,24 +316,26 @@ const RecordWindow = () => {
         <div className={s.windowContent}>
           <div className={s.namePart}>
             {/* <img src={logo} alt="Logo" className={s.logo} /> */}
-            <Logo />
+            {/* <Logo /> */}
             <p className={s.name}>SpeakFlow</p>
           </div>
-
           <div className={s.audioVisualizer}>
-            <AudioVisualizer
-              audioContext={audioContext}
-              sourceNode={sourceNodeSpeaker}
-            />
-            <AudioVisualizer
-              audioContext={audioContext}
-              sourceNode={sourceNodeMic}
-            />
+            {audioContext && sourceNodeSpeaker && sourceState === "speaker" && (
+              <AudioVisualizer
+                audioContext={audioContext}
+                sourceNode={sourceNodeSpeaker}
+              />
+            )}
+            {audioContext && sourceNodeMic && sourceState === "mic" && (
+              <AudioVisualizer
+                audioContext={audioContext}
+                sourceNode={sourceNodeMic}
+              />
+            )}
             <div className={s.timer}>
               <Timer />
             </div>
           </div>
-
           <textarea
             id="transcription-display"
             ref={textareaRef}
@@ -267,7 +367,7 @@ const RecordWindow = () => {
             <SelectLanguagePanel />
             <div className={s.btnWrapper}>
               <Toggle data="mic" />
-              <PlayModePanel />
+              <PlayModePanel handleChange={handleActiveBtnChange} />
               <Toggle data="portrait" />
             </div>
             <div className={s.btnWrapper}>

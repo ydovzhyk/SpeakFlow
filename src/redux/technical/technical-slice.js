@@ -30,10 +30,10 @@ const technical = createSlice({
     clearTechnicalMessage: (store) => {
       store.message = null;
     },
-    addLetterTranscript: (store, action) => {
+    addSentenceTranscript: (store, action) => {
       store.textArray.push(action.payload);
     },
-    addLetterTranslated: (store, action) => {
+    addSentenceTranslated: (store, action) => {
       store.textTranslatedArray.push(action.payload);
     },
     setNotifacation: (store, action) => {
@@ -77,8 +77,8 @@ export const {
   setModalWindowStatus,
   clearTechnicalError,
   clearTechnicalMessage,
-  addLetterTranscript,
-  addLetterTranslated,
+  addSentenceTranscript,
+  addSentenceTranslated,
   setNotifacation,
   setConfirmation,
   setRecBtn,

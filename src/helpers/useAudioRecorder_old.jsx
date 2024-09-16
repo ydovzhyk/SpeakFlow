@@ -18,7 +18,7 @@ const useAudioRecorder = ({ dataCb }) => {
   const _startTimer = useCallback(() => {
     const interval = setInterval(() => {
       setRecordingTime((time) => time + 1);
-    }, 1000);
+    }, 1500);
     setTimerInterval(interval);
   }, [setRecordingTime, setTimerInterval]);
 
@@ -50,7 +50,13 @@ const useAudioRecorder = ({ dataCb }) => {
       return 24000;
     }
 
-    console.log("Стартуємо запис");
+    audioContext.current.onerror = (event) => {
+      console.error("AudioContext error:", event.error);
+    };
+
+    if (audioContext.current.state === "suspended") {
+      await audioContext.current.resume();
+    }
     const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       audio: true,
@@ -60,7 +66,6 @@ const useAudioRecorder = ({ dataCb }) => {
       audio: true,
     });
 
-    audioContext.current.resume();
     sourceNodeMic.current =
       audioContext.current.createMediaStreamSource(streamMic);
     sourceNodeSpeaker.current =
@@ -72,30 +77,48 @@ const useAudioRecorder = ({ dataCb }) => {
       1,
       1
     );
-
     scriptProcessorSpeaker.current = audioContext.current.createScriptProcessor(
       chunkSize,
       1,
       1
     );
 
-    scriptProcessorMic.current.onaudioprocess = (event) => {
-      const inputBuffer = event.inputBuffer;
-      const float32Audio = inputBuffer.getChannelData(0);
-      const pcm16Audio = float32To16BitPCM(float32Audio);
-      if (dataCb) {
-        dataCb(pcm16Audio, audioContext.current.sampleRate, "mic");
-      }
-    };
+    let lastMicLevel = 0;
+    let lastSpeakerLevel = 0;
 
-    scriptProcessorSpeaker.current.onaudioprocess = (event) => {
-      const inputBuffer = event.inputBuffer;
-      const float32Audio = inputBuffer.getChannelData(0);
-      const pcm16Audio = float32To16BitPCM(float32Audio);
-      if (dataCb) {
-        dataCb(pcm16Audio, audioContext.current.sampleRate, "speaker");
-      }
-    };
+    const interval = setInterval(() => {
+      scriptProcessorMic.current.onaudioprocess = (event) => {
+        const inputBuffer = event.inputBuffer;
+        const float32Audio = inputBuffer.getChannelData(0);
+        const pcm16Audio = float32To16BitPCM(float32Audio);
+        const micLevel = pcm16Audio.reduce(
+          (acc, val) => acc + Math.abs(val),
+          0
+        );
+        lastMicLevel = micLevel;
+
+        if (micLevel > lastSpeakerLevel) {
+          dataCb(pcm16Audio, audioContext.current.sampleRate, "mic");
+        }
+      };
+
+      scriptProcessorSpeaker.current.onaudioprocess = (event) => {
+        const inputBuffer = event.inputBuffer;
+        const float32Audio = inputBuffer.getChannelData(0);
+        const pcm16Audio = float32To16BitPCM(float32Audio);
+        const speakerLevel = pcm16Audio.reduce(
+          (acc, val) => acc + Math.abs(val),
+          0
+        );
+        lastSpeakerLevel = speakerLevel;
+
+        if (speakerLevel > lastMicLevel) {
+          dataCb(pcm16Audio, audioContext.current.sampleRate, "speaker");
+        }
+      };
+    }, 1000);
+
+    setTimerInterval(interval);
 
     sourceNodeMic.current.connect(scriptProcessorMic.current);
     sourceNodeSpeaker.current.connect(scriptProcessorSpeaker.current);
@@ -111,6 +134,7 @@ const useAudioRecorder = ({ dataCb }) => {
     recorderMic.start();
     recorderSpeaker.start();
     _startTimer();
+
     return audioContext.current.sampleRate;
   };
 
@@ -174,3 +198,75 @@ const useAudioRecorder = ({ dataCb }) => {
 };
 
 export default useAudioRecorder;
+
+// const startRecording = async () => {
+//   if (timerInterval != null) throw new Error("timerInterval not null");
+//   const isTesting = !navigator.mediaDevices;
+//   if (isTesting) {
+//     setIsRecording(true);
+//     return 24000;
+//   }
+
+//   const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
+//     video: true,
+//     audio: true,
+//   });
+
+//   const streamMic = await navigator.mediaDevices.getUserMedia({
+//     audio: true,
+//   });
+
+//   audioContext.current.resume();
+//   sourceNodeMic.current =
+//     audioContext.current.createMediaStreamSource(streamMic);
+//   sourceNodeSpeaker.current =
+//     audioContext.current.createMediaStreamSource(streamSpeaker);
+
+//   const chunkSize = 4096;
+//   scriptProcessorMic.current = audioContext.current.createScriptProcessor(
+//     chunkSize,
+//     1,
+//     1
+//   );
+
+//   scriptProcessorSpeaker.current = audioContext.current.createScriptProcessor(
+//     chunkSize,
+//     1,
+//     1
+//   );
+
+//   scriptProcessorMic.current.onaudioprocess = (event) => {
+//     const inputBuffer = event.inputBuffer;
+//     const float32Audio = inputBuffer.getChannelData(0);
+//     const pcm16Audio = float32To16BitPCM(float32Audio);
+//     if (dataCb) {
+//       dataCb(pcm16Audio, audioContext.current.sampleRate, "mic");
+//     }
+//   };
+
+//   scriptProcessorSpeaker.current.onaudioprocess = (event) => {
+//     const inputBuffer = event.inputBuffer;
+//     const float32Audio = inputBuffer.getChannelData(0);
+//     const pcm16Audio = float32To16BitPCM(float32Audio);
+//     if (dataCb) {
+//       dataCb(pcm16Audio, audioContext.current.sampleRate, "speaker");
+//     }
+//   };
+
+//   sourceNodeMic.current.connect(scriptProcessorMic.current);
+//   sourceNodeSpeaker.current.connect(scriptProcessorSpeaker.current);
+
+//   scriptProcessorMic.current.connect(audioContext.current.destination);
+//   scriptProcessorSpeaker.current.connect(audioContext.current.destination);
+
+//   setIsRecording(true);
+//   const recorderMic = new MediaRecorder(streamMic);
+//   const recorderSpeaker = new MediaRecorder(streamSpeaker);
+//   setMediaRecorderMic(recorderMic);
+//   setMediaRecorderSpeaker(recorderSpeaker);
+//   recorderMic.start();
+//   recorderSpeaker.start();
+//   _startTimer();
+
+//   return audioContext.current.sampleRate;
+// };

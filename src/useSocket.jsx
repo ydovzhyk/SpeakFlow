@@ -2,17 +2,17 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import {
-  addLetterTranscript,
-  addLetterTranslated,
+  addSentenceTranscript,
+  addSentenceTranslated,
   setConfirmation,
   setNotifacation,
   setRecBtn,
   setDeepgramStatus,
-} from "../redux/technical/technical-slice";
+} from "./redux/technical/technical-slice";
 import {
   getTargetLanguage,
   getInputLanguage,
-} from "../redux/technical/technical-selectors";
+} from "./redux/technical/technical-selectors";
 
 const serverURL = "http://localhost:4000";
 // const serverURL =
@@ -60,22 +60,10 @@ const useSocket = () => {
             }
 
             if (event === "final") {
-              console.log(data);
-              for (let i = 0; i < data.length; i++) {
-                dispatch(addLetterTranscript(data[i]));
-              }
-              if (data.length > 0) {
-                dispatch(addLetterTranscript(" "));
-              }
+              dispatch(addSentenceTranscript(data));
             }
-
             if (event === "final-transleted") {
-              for (let i = 0; i < data.length; i++) {
-                dispatch(addLetterTranslated(data[i]));
-              }
-              if (data.length > 0) {
-                dispatch(addLetterTranslated(" "));
-              }
+              dispatch(addSentenceTranslated(data));
             }
           });
         });
@@ -87,7 +75,7 @@ const useSocket = () => {
 
   const sendAudio = (audioData, sampleRate, sourceType) => {
     if (socketRef.current) {
-      console.log(sourceType);
+      // console.log(sourceType);
       socketRef.current.emit("incoming-audio", {
         audioData,
         sampleRate,

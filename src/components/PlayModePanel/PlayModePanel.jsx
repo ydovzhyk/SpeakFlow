@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import { setActiveBtn } from "../../redux/technical/technical-slice";
 import {
   getActiveBtn,
@@ -13,10 +14,15 @@ import imagestop02 from "../../images/icons8-stop-squared.png";
 
 import s from "./PlayModePanel.module.scss";
 
-const PlayModePanel = () => {
+const PlayModePanel = ({ handleChange }) => {
   const dispatch = useDispatch();
   const isActiveBtn = useSelector(getActiveBtn);
   const isRecBtn = useSelector(getRecBtn);
+
+  const handleButtonClick = (btnType) => {
+    dispatch(setActiveBtn(btnType));
+    handleChange(btnType); // Повідомити батьківський компонент про зміну
+  };
 
   return (
     <div className={s.playMode}>
@@ -39,7 +45,7 @@ const PlayModePanel = () => {
               width: isActiveBtn === "play" ? "25px" : "35px",
               height: isActiveBtn === "play" ? "25px" : "35px",
             }}
-            onClick={() => dispatch(setActiveBtn("play"))}
+            onClick={() => handleButtonClick("play")}
           />
         )}
         {isRecBtn && (
@@ -64,7 +70,7 @@ const PlayModePanel = () => {
             width: isActiveBtn === "pause" ? "25px" : "35px",
             height: isActiveBtn === "pause" ? "25px" : "35px",
           }}
-          onClick={() => dispatch(setActiveBtn("pause"))}
+          onClick={() => handleButtonClick("pause")}
         />
       </div>
       <div
@@ -83,11 +89,15 @@ const PlayModePanel = () => {
             width: isActiveBtn === "stop" ? "25px" : "35px",
             height: isActiveBtn === "stop" ? "25px" : "35px",
           }}
-          onClick={() => dispatch(setActiveBtn("stop"))}
+          onClick={() => handleButtonClick("stop")}
         />
       </div>
     </div>
   );
+};
+
+PlayModePanel.propTypes = {
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default PlayModePanel;
