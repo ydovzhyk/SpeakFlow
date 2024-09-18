@@ -1,0 +1,21 @@
+.windowTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.windowText {
+  padding: 10px 10px;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  resize: none;
+  overflow: auto;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid #017683;
+}

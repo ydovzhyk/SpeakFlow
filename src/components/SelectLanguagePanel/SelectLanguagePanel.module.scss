@@ -18,14 +18,26 @@
   width: 160px;
   height: 35px;
   border-radius: 10px;
-  font-family: "Open Sans", sans-serif;
+  border: 1px solid #017683;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1;
-  color: #2a2f55;
+}
+
+.iconWrapper {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #017683;
+  background-color: #ffffff;
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
 }

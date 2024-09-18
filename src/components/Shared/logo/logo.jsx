@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import s from "./logo.module.scss";
 
 const Logo = () => {
@@ -35,7 +36,7 @@ const Logo = () => {
     );
   }
 
-  return <div className={s.wave_container}>{bars}</div>;
+  return <div className={s.bar_container}>{bars}</div>;
 };
 
 export default Logo;

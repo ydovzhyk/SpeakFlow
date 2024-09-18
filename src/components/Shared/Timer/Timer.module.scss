@@ -1,12 +1,17 @@
 .timerPart {
+  height: 100%;
   padding: 0px 15px;
-  background-color: white;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .timer {
   margin: 0px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
   font-size: 18px;
-  color: #2a2f55;
+  color: black;
 }

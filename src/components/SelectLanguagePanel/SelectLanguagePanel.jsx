@@ -80,7 +80,9 @@ const SelectLanguagePanel = () => {
   return (
     <div className={s.languagePanel}>
       <label className={s.label}>
-        <img src={input} alt="input" className={s.icon} />
+        <div className={s.iconWrapper}>
+          <img src={input} alt="input" className={s.icon} />
+        </div>
         <select
           className={s.select}
           value={languageInput}
@@ -94,7 +96,9 @@ const SelectLanguagePanel = () => {
         </select>
       </label>
       <label className={s.label}>
-        <img src={output} alt="output" className={s.icon} />
+        <div className={s.iconWrapper}>
+          <img src={output} alt="output" className={s.icon} />
+        </div>
         <select
           className={s.select}
           value={languageOutput}

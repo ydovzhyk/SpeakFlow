@@ -6,7 +6,6 @@ import {
   getModalWindowStatus,
 } from "./redux/technical/technical-selectors";
 import ModalWindow from "./components/Shared/ModalWindow";
-import background from "./images/mockup-bg.d9d9e521.png";
 
 function App() {
   const isNotification = useSelector(getNotification);
@@ -19,7 +18,7 @@ function App() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundImage: `url(${background})`,
+        backgroundColor: "#F4FBF7",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

@@ -1,4 +1,4 @@
-.wave_container {
+.bar_container {
   display: flex;
   align-items: center;
 }
@@ -6,7 +6,7 @@
 .wave_bar {
   width: 1px;
   margin: 0 1px;
-  background-color: #fff;
+  background-color: #017683;
   animation: wave-animation 0.5s infinite ease-in-out;
 }
 
