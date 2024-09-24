@@ -1,3 +1,4 @@
+@use "../../styles/mixins";
 .windowTextContainer {
   display: flex;
   flex-direction: column;
@@ -17,5 +18,5 @@
   font-weight: 200;
   font-size: 16px;
   line-height: 1.5;
-  border: 1px solid #017683;
+  border: 1px solid var(--accent-color);
 }

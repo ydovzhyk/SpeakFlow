@@ -1,3 +1,4 @@
+@use "../../styles/mixins";
 @keyframes blink {
   0% {
     opacity: 0;
@@ -41,7 +42,6 @@
 }
 
 .playMode {
-  background-color: #2a2f55;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
@@ -54,8 +54,13 @@
     align-items: center;
     justify-items: center;
     border-radius: 50%;
-    border: 1px solid white;
+    border: 1px solid var(--main-color);
     cursor: pointer;
+  }
+
+  &__icon {
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -63,7 +68,7 @@
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background-color: red;
+  background-color: var(--recording-btn-color);
   animation: blink 2s infinite;
   display: flex;
   align-items: center;
@@ -74,5 +79,5 @@
   font-family: "Roboto", sans-serif;
   font-weight: 200;
   font-size: 10px;
-  color: white;
+  color: var(--main-color);
 }

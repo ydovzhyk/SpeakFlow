@@ -4,11 +4,13 @@ import {
   getTextArray,
   getTextTranslatedArray,
 } from "../../redux/technical/technical-selectors";
+import { getDisplay } from "../../redux/technical/technical-selectors";
 
 import s from "./TextView.module.scss";
 
 const TextView = () => {
   const textArray = useSelector(getTextArray);
+  const displayType = useSelector(getDisplay);
   const textareaRef = useRef(null);
   const [typedText, setTypedText] = useState("");
   const animationRef = useRef({
@@ -100,12 +102,15 @@ const TextView = () => {
   };
 
   return (
-    <div className={s.windowTextContainer}>
+    <div
+      className={s.windowTextContainer}
+      style={{ flexDirection: displayType === "portrait" ? "column" : "row" }}
+    >
       <textarea
         id="transcription-display"
         ref={textareaRef}
         className={s.windowText}
-        rows="9"
+        rows={displayType === "portrait" ? "8" : "12"}
         placeholder="Live transcription"
         value={typedText}
         onChange={(e) => handleTextChange(e.target.value, "first")}
@@ -114,7 +119,7 @@ const TextView = () => {
         id="transcription-transleted-display"
         ref={thirdTextareaRef}
         className={s.windowText}
-        rows="9"
+        rows={displayType === "portrait" ? "8" : "12"}
         placeholder="Live translation"
         value={translatedText}
         onChange={(e) => handleTextChange(e.target.value, "third")}

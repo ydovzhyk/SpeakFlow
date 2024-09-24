@@ -1,0 +1,85 @@
+@use "../../../styles/mixins";
+
+.label {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+  height: 35px;
+  width: 100%;
+  @include mixins.mq(tablet) {
+    margin-bottom: 55px;
+  }
+  @include mixins.mq(desktop) {
+    margin-bottom: 60px;
+  }
+}
+
+.input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  padding-left: 10px;
+  width: 100%;
+  height: 35px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  background-color: var(--main-color);
+  color: var(--second-text-color);
+  box-shadow: none;
+  border-radius: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom: 1px solid var(--accent-color);
+  letter-spacing: 1px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.hasValue {
+  background: var(--main-color);
+  border-bottom: 1px solid var(--accent-color);
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent-color);
+  background: var(--main-color);
+}
+
+.error {
+  position: absolute;
+  top: 40px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 1;
+  color: red;
+}
+
+.placeholderTop {
+  position: absolute;
+  top: -25px;
+  left: 1px;
+  display: inline-block;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.placeholderBottom {
+  position: absolute;
+  top: 10px;
+  left: 1px;
+  margin-left: 10px;
+  display: inline-block;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+}

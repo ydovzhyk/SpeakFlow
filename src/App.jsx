@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
-import RecordWindow from "./components/RecordWindow";
+import UserRoutes from "./components/Routes/UserRoutes.jsx";
 import CountdownCircle from "./components/Shared/CountdownCircle/CountdownCircle";
 import {
   getNotification,
   getModalWindowStatus,
 } from "./redux/technical/technical-selectors";
 import ModalWindow from "./components/Shared/ModalWindow";
+import background from "./images/background.webp";
+import "./styles/styles.scss"; //файл зі стилями треба підключати у додаток
 
 function App() {
   const isNotification = useSelector(getNotification);
@@ -19,11 +21,14 @@ function App() {
         flexDirection: "column",
         justifyContent: "space-between",
         backgroundColor: "#F4FBF7",
+        backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <RecordWindow />
+      <main>
+        <UserRoutes />
+      </main>
       {isShowModal && <ModalWindow />}
       {isNotification && <CountdownCircle />}
     </div>

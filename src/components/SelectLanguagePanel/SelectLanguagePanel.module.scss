@@ -1,3 +1,19 @@
+@use "../../styles/mixins";
+.languageSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionName {
+  margin: 0px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+}
+
 .languagePanel {
   width: 100%;
   display: flex;
@@ -7,7 +23,7 @@
 
 .label {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
 }
@@ -15,29 +31,39 @@
 .select {
   padding-left: 10px;
   padding-right: 5px;
-  width: 160px;
+  width: 150px;
   height: 35px;
   border-radius: 10px;
-  border: 1px solid #017683;
+  border: 1px solid var(--accent-color);
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1;
+  @include mixins.mq(tablet) {
+    width: 175px;
+  }
+  @include mixins.mq(desktop) {
+    width: 190px;
+  }
+}
+
+.languagePanelName {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--accent-color);
 }
 
 .iconWrapper {
-  width: 35px;
-  height: 35px;
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 50%;
-  border: 1px solid #017683;
-  background-color: #ffffff;
 }
 
 .icon {
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
+  width: 35px;
+  height: 35px;
 }

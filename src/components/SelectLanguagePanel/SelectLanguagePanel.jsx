@@ -8,8 +8,8 @@ import {
   getInputLanguage,
   getTargetLanguage,
 } from "../../redux/technical/technical-selectors";
-import input from "../../images/input.png";
-import output from "../../images/output.png";
+// import input from "../../images/input.png";
+// import output from "../../images/output.png";
 
 import s from "./SelectLanguagePanel.module.scss";
 
@@ -80,9 +80,7 @@ const SelectLanguagePanel = () => {
   return (
     <div className={s.languagePanel}>
       <label className={s.label}>
-        <div className={s.iconWrapper}>
-          <img src={input} alt="input" className={s.icon} />
-        </div>
+        <p className={s.languagePanelName}>input</p>
         <select
           className={s.select}
           value={languageInput}
@@ -96,9 +94,7 @@ const SelectLanguagePanel = () => {
         </select>
       </label>
       <label className={s.label}>
-        <div className={s.iconWrapper}>
-          <img src={output} alt="output" className={s.icon} />
-        </div>
+        <p className={s.languagePanelName}>output</p>
         <select
           className={s.select}
           value={languageOutput}

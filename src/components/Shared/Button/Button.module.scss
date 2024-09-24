@@ -1,0 +1,42 @@
+@use "../../../styles/mixins";
+
+.btnDark {
+  width: 150px;
+  height: 35px;
+  background-color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  @include mixins.mq(tablet) {
+    width: 175px;
+  }
+  @include mixins.mq(desktop) {
+    width: 190px;
+  }
+}
+
+.btnDark:hover {
+  background-color: --accent-hover-color;
+  border: 1px solid var(--accent-color);
+}
+
+.btnWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btnText {
+  margin: 0px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--main-color);
+}

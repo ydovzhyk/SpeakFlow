@@ -1,0 +1,188 @@
+@use "../../styles/mixins";
+@use "sass:math";
+
+@keyframes floating {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  45% {
+    transform: translate3d(0, -10%, 0);
+  }
+  55% {
+    transform: translate3d(0, -10%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes floatingShadow {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(0.85);
+  }
+  55% {
+    transform: scale(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh);
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../images/background.webp");
+  @include mixins.mq(tablet) {
+    height: calc(100vh);
+  }
+  @include mixins.mq(desktop) {
+    height: calc(100vh);
+  }
+}
+
+.window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 40px;
+  font-weight: 600;
+  font-size: 28px;
+  margin-top: 15px;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.txt {
+  margin-bottom: 40px;
+  color: var(--accent-color);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.booWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.boo {
+  width: 100px;
+  height: 125px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 4px solid var(--accent-color);
+  border-bottom: 0;
+  overflow: hidden;
+  border-radius: 80px 80px 0 0;
+  box-shadow: -16px 0 0 2px rgb(226 228 232 / 50%) inset;
+  -webkit-animation: floating 3s ease-in-out infinite;
+  animation: floating 3s ease-in-out infinite;
+
+  .face {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: round(math.div(math.div(16px, 1.3333), 4));
+      height: round(math.div(math.div(16px, 1.3333), 4));
+      background-color: var(--text-color);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 16px + round(math.div(math.div(16px, 1.3333), 3));
+    }
+
+    &::before {
+      left: round(math.div(16px, 1.3333));
+    }
+
+    &::after {
+      right: round(math.div(16px, 1.3333));
+    }
+  }
+}
+.boo:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: math.div(-16px, 1.7);
+  bottom: math.div(-16px, 3.85);
+  width: calc(100% + 16px);
+  height: 16px;
+  background-repeat: repeat-x;
+  background-size: 16px 16px;
+  background-position: left bottom;
+  background-image: linear-gradient(
+      -45deg,
+      var(--accent-color),
+      math.div(16px, 2),
+      transparent 0
+    ),
+    linear-gradient(
+      45deg,
+      var(--accent-color),
+      math.div(16px, 2),
+      transparent 0
+    ),
+    linear-gradient(
+      -45deg,
+      var(--accent-color),
+      math.div(16px, 1.7),
+      transparent 0
+    ),
+    linear-gradient(
+      45deg,
+      var(--accent-color),
+      math.div(16px, 1.7),
+      transparent 0
+    );
+}
+
+.shadow {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90px;
+  height: 10px;
+  background-color: var(--accent-color);
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 50%;
+  -webkit-animation: floatingShadow 3s ease-in-out infinite;
+  animation: floatingShadow 3s ease-in-out infinite;
+}
+
+.btnContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

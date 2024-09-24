@@ -16,20 +16,50 @@
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
-.windowContent {
-  padding: 10px 20px;
+.windowContentPortrait {
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  width: 450px;
-  border: 2px solid #017683;
+  width: 100%;
+  border: 2px solid var(--accent-color);
   border-radius: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
+  @include mixins.mq(tablet) {
+    width: 400px;
+  }
+  @include mixins.mq(desktop) {
+    width: 450px;
+  }
+}
+
+.windowContentLandscape {
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 1200px;
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+  background-color: var(--background-color);
+}
+
+.modePart {
+  width: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nameAndAuth {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .namePart {
@@ -50,15 +80,15 @@
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   font-size: 23px;
-  color: #017683;
+  color: var(--accent-color);
 }
 
 .audioVisualizer {
   padding-right: 45px;
   position: relative;
-  border: 1px solid #017683;
+  border: 1px solid var(--accent-color);
   height: 40px;
-  background-color: #ffffff;
+  background-color: var(--main-color);
 }
 
 .timer {
@@ -69,7 +99,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 38px;
 }
 
 .iconWrapper {
@@ -84,10 +114,17 @@
 }
 
 .settingsWrapper {
-  margin-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.playModeWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -99,28 +136,6 @@
   gap: 10px;
 }
 
-.btn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 140px;
-  height: 35px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  background-color: #017683;
-  border: 1px solid #017683;
-  border-radius: 10px;
-}
-
-.btn:hover {
-  background-color: #029aaa;
-  border: 1px solid #017683;
-}
-
 .recordingButton {
   position: absolute;
   top: 15px;
@@ -128,7 +143,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: red;
+  background-color: var(--recording-btn-color);
   animation: blink 2s infinite;
   display: flex;
   align-items: center;
@@ -139,7 +154,7 @@
   font-family: "Roboto", sans-serif;
   font-weight: 200;
   font-size: 10px;
-  color: white;
+  color: var(--main-color);
 }
 
 .btnPart {

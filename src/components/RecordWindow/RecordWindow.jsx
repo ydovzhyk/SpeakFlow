@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import useSocket from "../../useSocket";
 import useAudioRecorder from "../../helpers/useAudioRecorder_old";
+import { useMediaQuery } from "react-responsive";
 import AudioVisualizer from "../Shared/AudioVisualizer/AudioVisualizer";
 import {
   getActiveBtn,
   getDeepgramStatus,
+  getDisplay,
   getLine,
 } from "../../redux/technical/technical-selectors";
 import {
@@ -12,6 +14,7 @@ import {
   setConfirmation,
   setRecBtn,
   changeLine,
+  changeDisplay,
   // clearTextArray,
 } from "../../redux/technical/technical-slice";
 import TextView from "../TextView";
@@ -24,13 +27,18 @@ import image03 from "../../images/save-new.png";
 import image04 from "../../images/clear-new.png";
 import mic from "../../images/microphone.png";
 import speaker from "../../images/speaker.png";
+import Button from "../Shared/Button";
+import AuthInfo from "../AuthInfo";
 
 import s from "./RecordWindow.module.scss";
+import { useEffect } from "react";
 
 const RecordWindow = () => {
+  const isDesctop = useMediaQuery({ minWidth: 1280 });
   const dispatch = useDispatch();
   const activeBtn = useSelector(getActiveBtn);
   const activeLine = useSelector(getLine);
+  const displayType = useSelector(getDisplay);
   const deepgramStatus = useSelector(getDeepgramStatus);
   const { initialize, sendAudio, pause, disconnect } = useSocket();
   const {
@@ -48,6 +56,12 @@ const RecordWindow = () => {
       dispatch(changeLine(sourceType));
     },
   });
+
+  useEffect(() => {
+    if (!isDesctop) {
+      dispatch(changeDisplay("portrait"));
+    }
+  }, [isDesctop, dispatch]);
 
   const handleActiveBtnChange = (btnType) => {
     switch (btnType) {
@@ -97,64 +111,142 @@ const RecordWindow = () => {
 
   return (
     <div className={s.recordWindow}>
-      <div className={s.windowContent}>
-        <div className={s.namePart}>
-          <Logo />
-          <p className={s.name}>SpeakFlow</p>
+      {displayType === "portrait" && (
+        <div className={s.windowContentPortrait}>
+          <div className={s.nameAndAuth}>
+            <div className={s.namePart}>
+              <Logo />
+              <p className={s.name}>SpeakFlow</p>
+            </div>
+            <AuthInfo />
+          </div>
+          <div className={s.audioVisualizer}>
+            {audioContext && sourceNodeSpeaker && activeLine === "speaker" && (
+              <AudioVisualizer
+                audioContext={audioContext}
+                sourceNode={sourceNodeSpeaker}
+              />
+            )}
+            {audioContext && sourceNodeMic && activeLine === "mic" && (
+              <AudioVisualizer
+                audioContext={audioContext}
+                sourceNode={sourceNodeMic}
+              />
+            )}
+            <div className={s.timer}>
+              <Timer />
+            </div>
+            <div className={s.iconWrapper}>
+              <img
+                src={activeLine === "mic" ? mic : speaker}
+                alt="active chanel"
+                className={s.icon}
+                style={{
+                  width: activeLine === "mic" ? "25px" : "20px",
+                  height: activeLine === "mic" ? "25px" : "20px",
+                  marginRight: activeLine === "mic" ? "15px" : "15px",
+                }}
+              />
+            </div>
+          </div>
+          <TextView />
+          <div className={s.settingsWrapper}>
+            <SelectLanguagePanel />
+            <div className={s.playModeWrapper}>
+              <PlayModePanel handleChange={handleActiveBtnChange} />
+              {isDesctop && <Toggle />}
+            </div>
+            <div className={s.btnWrapper}>
+              <Button
+                id="reset-button"
+                btnClass="btnDark"
+                image={image04}
+                text="Clear"
+                onClick={handleClear}
+              />
+              <Button
+                id="save-button"
+                btnClass="btnDark"
+                image={image03}
+                text="Save"
+                onClick={handleSave}
+              />
+            </div>
+          </div>
         </div>
-        <div className={s.audioVisualizer}>
-          {audioContext && sourceNodeSpeaker && activeLine === "speaker" && (
-            <AudioVisualizer
-              audioContext={audioContext}
-              sourceNode={sourceNodeSpeaker}
-            />
-          )}
-          {audioContext && sourceNodeMic && activeLine === "mic" && (
-            <AudioVisualizer
-              audioContext={audioContext}
-              sourceNode={sourceNodeMic}
-            />
-          )}
-          <div className={s.timer}>
-            <Timer />
-          </div>
-          <div className={s.iconWrapper}>
-            <img
-              src={activeLine === "mic" ? mic : speaker}
-              alt="active chanel"
-              className={s.icon}
-              style={{
-                width: activeLine === "mic" ? "25px" : "20px",
-                height: activeLine === "mic" ? "25px" : "20px",
-                marginRight: activeLine === "mic" ? "15px" : "15px",
-              }}
-            />
-          </div>
-        </div>
-        <TextView />
-        <div className={s.settingsWrapper}>
-          <SelectLanguagePanel />
-          <div className={s.btnWrapper}>
-            <Toggle data="mic" />
-            <PlayModePanel handleChange={handleActiveBtnChange} />
-            <Toggle data="portrait" />
-          </div>
-          <div className={s.btnWrapper}>
-            <button id="reset-button" className={s.btn} onClick={handleClear}>
-              <div className={s.btnPart}>
-                <img src={image04} alt="clear" className={s.icon} />
-                <p className={s.btnText}>Clear</p>
+      )}
+      {displayType === "landscape" && (
+        <div className={s.windowContentLandscape}>
+          <div className={s.modePart}>
+            <div>
+              <div className={s.nameAndAuth}>
+                <div className={s.namePart}>
+                  <Logo />
+                  <p className={s.name}>SpeakFlow</p>
+                </div>
+                <AuthInfo />
               </div>
-            </button>
-            <button id="save-button" className={s.btn} onClick={handleSave}>
-              <div className={s.btnPart}>
-                <img src={image03} alt="save" className={s.icon} />
-                <p className={s.btnText}>Save</p>
+              <div className={s.audioVisualizer}>
+                {audioContext &&
+                  sourceNodeSpeaker &&
+                  activeLine === "speaker" && (
+                    <AudioVisualizer
+                      audioContext={audioContext}
+                      sourceNode={sourceNodeSpeaker}
+                    />
+                  )}
+                {audioContext && sourceNodeMic && activeLine === "mic" && (
+                  <AudioVisualizer
+                    audioContext={audioContext}
+                    sourceNode={sourceNodeMic}
+                  />
+                )}
+                <div className={s.timer}>
+                  <Timer />
+                </div>
+                <div className={s.iconWrapper}>
+                  <img
+                    src={activeLine === "mic" ? mic : speaker}
+                    alt="active chanel"
+                    className={s.icon}
+                    style={{
+                      width: activeLine === "mic" ? "25px" : "20px",
+                      height: activeLine === "mic" ? "25px" : "20px",
+                      marginRight: activeLine === "mic" ? "15px" : "15px",
+                    }}
+                  />
+                </div>
               </div>
-            </button>
+            </div>
+            <div className={s.settingsWrapper}>
+              <SelectLanguagePanel />
+              <div className={s.playModeWrapper}>
+                <PlayModePanel handleChange={handleActiveBtnChange} />
+                <Toggle />
+              </div>
+              <div className={s.btnWrapper}>
+                <Button
+                  id="reset-button"
+                  btnClass="btnDark"
+                  image={image04}
+                  text="Clear"
+                  onClick={handleClear}
+                />
+                <Button
+                  id="save-button"
+                  btnClass="btnDark"
+                  image={image03}
+                  text="Save"
+                  onClick={handleSave}
+                />
+              </div>
+            </div>
+          </div>
+          <div style={{ width: "800px" }}>
+            <TextView />
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -3,35 +3,32 @@
   flex-direction: row;
 
   &__left {
-    padding: 5px 0px;
+    padding: 2px 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    border: 1px solid white;
+    width: 50px;
+    height: 37px;
+    border: 1px solid var(--accent-color);
     border-right: none;
-    border-radius: 15px 0 0 15px;
+    border-radius: 10px 0 0 10px;
     cursor: pointer;
   }
   &__right {
-    padding: 5px 0px;
+    padding: 2px 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    border: 1px solid white;
+    width: 50px;
+    height: 37px;
+    border: 1px solid var(--accent-color);
     border-left: none;
-    border-radius: 0 15px 15px 0;
+    border-radius: 0 10px 10px 0;
     cursor: pointer;
   }
   &__active {
-    background-color: white;
-  }
-
-  &__icon {
-    width: 20px;
-    height: 20px;
+    background-color: var(--accent-color);
   }
 }

@@ -6,7 +6,7 @@
 .wave_bar {
   width: 1px;
   margin: 0 1px;
-  background-color: #017683;
+  background-color: var(--accent-color);
   animation: wave-animation 0.5s infinite ease-in-out;
 }
 
