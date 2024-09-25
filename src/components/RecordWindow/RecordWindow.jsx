@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSocket from "../../useSocket";
 import useAudioRecorder from "../../helpers/useAudioRecorder_old";
@@ -8,6 +9,7 @@ import {
   getDeepgramStatus,
   getDisplay,
   getLine,
+  getPopUpWindowStatus,
 } from "../../redux/technical/technical-selectors";
 import {
   setNotifacation,
@@ -15,8 +17,10 @@ import {
   setRecBtn,
   changeLine,
   changeDisplay,
+  setPopUpWindowStatus,
   // clearTextArray,
 } from "../../redux/technical/technical-slice";
+import { getLogin } from "../../redux/auth/auth-selectors";
 import TextView from "../TextView";
 import Toggle from "../Shared/Toggle/Toggle";
 import PlayModePanel from "../PlayModePanel/PlayModePanel";
@@ -29,12 +33,14 @@ import mic from "../../images/microphone.png";
 import speaker from "../../images/speaker.png";
 import Button from "../Shared/Button";
 import AuthInfo from "../AuthInfo";
+import Popup from "../Shared/Popup/Popup";
 
 import s from "./RecordWindow.module.scss";
-import { useEffect } from "react";
 
 const RecordWindow = () => {
   const isDesctop = useMediaQuery({ minWidth: 1280 });
+  const isLogin = useSelector(getLogin);
+  const isPopupVisible = useSelector(getPopUpWindowStatus);
   const dispatch = useDispatch();
   const activeBtn = useSelector(getActiveBtn);
   const activeLine = useSelector(getLine);
@@ -62,6 +68,8 @@ const RecordWindow = () => {
       dispatch(changeDisplay("portrait"));
     }
   }, [isDesctop, dispatch]);
+
+  useEffect(() => {}, [isPopupVisible, dispatch]);
 
   const handleActiveBtnChange = (btnType) => {
     switch (btnType) {
@@ -99,7 +107,14 @@ const RecordWindow = () => {
     }
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    console.log("Реєструємо клік");
+    if (isLogin) {
+      console.log("Все ок");
+    } else {
+      dispatch(setPopUpWindowStatus(true));
+    }
+  };
 
   const handleClear = () => {
     // setTypedText("");
@@ -148,6 +163,11 @@ const RecordWindow = () => {
                 }}
               />
             </div>
+            <Popup
+              message="To save your text, you need to register or log in to your account."
+              isVisible={isPopupVisible}
+              onClose={() => dispatch(setPopUpWindowStatus(false))}
+            />
           </div>
           <TextView />
           <div className={s.settingsWrapper}>
@@ -216,6 +236,11 @@ const RecordWindow = () => {
                     }}
                   />
                 </div>
+                <Popup
+                  message="To save your text, you need to register or log in to your account."
+                  isVisible={isPopupVisible}
+                  onClose={() => dispatch(setPopUpWindowStatus(false))}
+                />
               </div>
             </div>
             <div className={s.settingsWrapper}>

@@ -77,6 +77,10 @@
   }
 }
 
+.title:hover {
+  color: var(--accent-hover-color);
+}
+
 .link {
   display: inline-block;
   position: relative;

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   modalWindowStatus: false,
+  popUpWindowStatus: false,
   error: null,
   message: null,
   textArray: [],
@@ -23,6 +24,9 @@ const technical = createSlice({
   reducers: {
     setModalWindowStatus: (store, action) => {
       store.modalWindowStatus = action.payload;
+    },
+    setPopUpWindowStatus: (store, action) => {
+      store.popUpWindowStatus = action.payload;
     },
     clearTechnicalError: (store) => {
       store.error = null;
@@ -75,6 +79,7 @@ const technical = createSlice({
 export default technical.reducer;
 export const {
   setModalWindowStatus,
+  setPopUpWindowStatus,
   clearTechnicalError,
   clearTechnicalMessage,
   addSentenceTranscript,

@@ -14,3 +14,5 @@ export const getTargetLanguage = ({ technical }) => technical.targetLanguage;
 export const getInputLanguage = ({ technical }) => technical.inputLanguage;
 export const getModalWindowStatus = ({ technical }) =>
   technical.modalWindowStatus;
+export const getPopUpWindowStatus = ({ technical }) =>
+  technical.popUpWindowStatus;

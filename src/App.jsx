@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import UserRoutes from "./components/Routes/UserRoutes.jsx";
+import { HelmetProvider } from "react-helmet-async";
 import CountdownCircle from "./components/Shared/CountdownCircle/CountdownCircle";
 import {
   getNotification,
@@ -14,24 +15,26 @@ function App() {
   const isShowModal = useSelector(getModalWindowStatus);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        backgroundColor: "#F4FBF7",
-        backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <main>
-        <UserRoutes />
-      </main>
-      {isShowModal && <ModalWindow />}
-      {isNotification && <CountdownCircle />}
-    </div>
+    <HelmetProvider>
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          backgroundColor: "#F4FBF7",
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <main>
+          <UserRoutes />
+        </main>
+        {isShowModal && <ModalWindow />}
+        {isNotification && <CountdownCircle />}
+      </div>
+    </HelmetProvider>
   );
 }
 

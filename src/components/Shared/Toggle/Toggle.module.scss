@@ -1,6 +1,8 @@
 .toggle {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
   &__left {
     padding: 2px 0px;
@@ -9,7 +11,7 @@
     align-items: center;
     justify-content: center;
     width: 50px;
-    height: 37px;
+    height: 35px;
     border: 1px solid var(--accent-color);
     border-right: none;
     border-radius: 10px 0 0 10px;
@@ -22,7 +24,7 @@
     align-items: center;
     justify-content: center;
     width: 50px;
-    height: 37px;
+    height: 35px;
     border: 1px solid var(--accent-color);
     border-left: none;
     border-radius: 0 10px 10px 0;
