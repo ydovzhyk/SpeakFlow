@@ -7,7 +7,9 @@ import { getLogin } from "../../../redux/auth/auth-selectors";
 import { fields } from "../../Shared/TextField/fields";
 import TextField from "../../Shared/TextField/TextField";
 import Button from "../../Shared/Button/Button";
+import Text from "../../Shared/Text/Text";
 import avatarImage from "../../../images/Avatar/avatar.svg";
+import { FcGoogle } from "react-icons/fc";
 
 import s from "./Register.module.scss";
 
@@ -15,6 +17,13 @@ const Register = () => {
   const isLogin = useSelector(getLogin);
   const dispatch = useDispatch();
   const [userAvatar, setUserAvatar] = useState(null);
+
+  const REACT_APP_API_URL = window.location.origin;
+
+  const googleText =
+    location.pathname === "/auth/login"
+      ? "Sign in quickly with Google"
+      : "Sign up quickly with Google";
 
   useEffect(() => {
     const loadImage = async () => {
@@ -55,7 +64,7 @@ const Register = () => {
   return (
     <section className={s.auth}>
       <div className="container">
-        <div className={s.box}>
+        <div className={s.authContainer}>
           <div className={s.linksWrapper}>
             <Link
               to={`/auth/login`}
@@ -77,6 +86,13 @@ const Register = () => {
             >
               <h2 className={s.title}>Registrtion</h2>
             </Link>
+          </div>
+          <div className={s.googleBtnContainer}>
+            <Text textClass="google-text" text={googleText} />
+            <a href={`${REACT_APP_API_URL}/google`} className={s.googleBtn}>
+              <FcGoogle size={24} />
+              Google
+            </a>
           </div>
           <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
             <Controller

@@ -1,0 +1,9 @@
+@use "../../../styles/mixins";
+
+.standart {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2px;
+  color: var(--text-color);
+}

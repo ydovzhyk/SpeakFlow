@@ -14,7 +14,7 @@ export const register = createAsyncThunk(
       const data = await axiosRegister(userData);
       const { accessToken, refreshToken, sid } = data;
       const authData = { accessToken, refreshToken, sid };
-      localStorage.setItem("middleway.authData", JSON.stringify(authData));
+      localStorage.setItem("SpeakFlow.authData", JSON.stringify(authData));
       return data;
     } catch (error) {
       const { data, status } = error.response;
@@ -31,7 +31,7 @@ export const login = createAsyncThunk(
       const data = await axiosLogin(userData);
       const { accessToken, refreshToken, sid } = data;
       const authData = { accessToken, refreshToken, sid };
-      localStorage.setItem("middleway.authData", JSON.stringify(authData));
+      localStorage.setItem("SpeakFlow.authData", JSON.stringify(authData));
       return data;
     } catch (error) {
       const { data, status } = error.response;
@@ -46,7 +46,7 @@ export const logout = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const data = await axiosLogout();
-      localStorage.removeItem("middleway.authData");
+      localStorage.removeItem("SpeakFlow.authData");
       return data;
     } catch (error) {
       const { data, status } = error.response;
@@ -60,7 +60,7 @@ export const updateUser = createAsyncThunk(
   "auth/current",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const authDataJSON = localStorage.getItem("middleway.authData");
+      const authDataJSON = localStorage.getItem("SpeakFlow.authData");
       const authData = JSON.parse(authDataJSON);
       const userData = authData;
       const data = await axiosGetCurrentUser(userData);
@@ -77,7 +77,7 @@ export const getCurrentUser = createAsyncThunk(
   "auth/current",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const authDataJSON = localStorage.getItem("kindergarten.authData");
+      const authDataJSON = localStorage.getItem("SpeakFlow.authData");
       const authData = JSON.parse(authDataJSON);
       const userData = authData;
       const data = await axiosGetCurrentUser(userData);

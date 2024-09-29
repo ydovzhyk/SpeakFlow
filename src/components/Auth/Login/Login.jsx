@@ -6,12 +6,21 @@ import { getLogin } from "../../../redux/auth/auth-selectors";
 import { fields } from "../../Shared/TextField/fields";
 import TextField from "../../Shared/TextField/TextField";
 import Button from "../../Shared/Button/Button";
+import Text from "../../Shared/Text/Text";
+import { FcGoogle } from "react-icons/fc";
 
 import s from "./Login.module.scss";
 
 const Login = () => {
   const isLogin = useSelector(getLogin);
   const dispatch = useDispatch();
+
+  const REACT_APP_API_URL = window.location.origin;
+
+  const googleText =
+    location.pathname === "/auth/login"
+      ? "Sign in quickly with Google"
+      : "Sign up quickly with Google";
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -55,6 +64,13 @@ const Login = () => {
             >
               <h2 className={s.title}>Registration</h2>
             </Link>
+          </div>
+          <div>
+            <Text textClass="google-text" text={googleText} />
+            <a href={`${REACT_APP_API_URL}/google`} className={s.googleBtn}>
+              <FcGoogle size={24} />
+              Google
+            </a>
           </div>
           <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
             <Controller

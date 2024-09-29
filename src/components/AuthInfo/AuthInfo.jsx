@@ -24,6 +24,7 @@ const AuthInfo = () => {
   //   const user = useSelector(getUser);
 
   const onLogout = async () => {
+    console.log("Тисну на вихід");
     navigate("/");
     await dispatch(logout());
     const authData = {
@@ -31,7 +32,7 @@ const AuthInfo = () => {
       refreshToken: null,
       sid: null,
     };
-    await localStorage.setItem("SpeakFlow", JSON.stringify(authData));
+    await localStorage.setItem("SpeakFlow.authData", JSON.stringify(authData));
   };
 
   const getClassName = ({ isActive }) => {
@@ -94,7 +95,7 @@ const AuthInfo = () => {
             <Button
               text="Вихід"
               type="button"
-              handleClick={onLogout}
+              onClick={onLogout}
               btnClass="exitHeaderBtn"
             />
           </div>
