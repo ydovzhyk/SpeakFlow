@@ -13,7 +13,8 @@ const Button = ({
     <button id={id} className={s[btnClass]} onClick={onClick} type={type}>
       <div className={s.btnWrapper}>
         {image && <img src={image} alt="icon" className={s.icon} />}
-        {text && <p className={s.btnText}>{text}</p>}
+        {text && <p>{text}</p>}
+        {/* {text && <p className={s.btnText}>{text}</p>} */}
       </div>
     </button>
   );

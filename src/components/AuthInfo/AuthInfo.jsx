@@ -1,108 +1,69 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { BsEscape } from "react-icons/bs";
-import { RxDividerVertical } from "react-icons/rx";
+import { NavLink } from "react-router-dom";
+import { PiLineVertical } from "react-icons/pi";
 
 import s from "./AuthInfo.module.scss";
 
-import {
-  getLogin,
-  //   getUserName,
-  //   getUser,
-  //   getUserAvatar,
-} from "../../redux/auth/auth-selectors";
+import { getLogin, getUser } from "../../redux/auth/auth-selectors";
 
 import { logout } from "../../redux/auth/auth-operations";
 import Button from "../Shared/Button/Button";
 
 const AuthInfo = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isUserLogin = useSelector(getLogin);
-  //   const userName = useSelector(getUserName);
-  //   const userAvatar = useSelector(getUserAvatar);
-  //   const user = useSelector(getUser);
+  const user = useSelector(getUser);
 
-  const onLogout = async () => {
-    console.log("Тисну на вихід");
-    navigate("/");
-    await dispatch(logout());
-    const authData = {
-      accessToken: null,
-      refreshToken: null,
-      sid: null,
-    };
-    await localStorage.setItem("SpeakFlow.authData", JSON.stringify(authData));
+  const onLogout = () => {
+    dispatch(logout());
   };
 
-  const getClassName = ({ isActive }) => {
-    return isActive
-      ? `${s.link} ${s.active} ${s.custom}`
-      : `${s.link} ${s.custom}`;
-  };
-
-  if (!isUserLogin) {
-    return (
-      <div className={s.userInfoSide}>
-        <div className={s.userWrapper}>
-          <div className={s.wrapper}>
-            <NavLink className={getClassName} to="/auth/login">
-              <span className={s.userText} style={{ marginRight: "-5px" }}>
-                Login
-              </span>
-            </NavLink>
-          </div>
-          <svg width="30" height="30">
-            <line
-              x1={15}
-              y1={5}
-              x2={15}
-              y2={35}
-              stroke="#414141"
-              strokeWidth={1}
-            />
-          </svg>
-          <div className={s.wrapper}>
-            <NavLink className={getClassName} to="/auth/registration">
-              <span className={s.userText} style={{ marginLeft: "-5px" }}>
-                Register
-              </span>
-            </NavLink>
+  return (
+    <>
+      {!isUserLogin && (
+        <div className={s.userInfoSide}>
+          <div className={s.userWrapper}>
+            <div className={s.wrapper}>
+              <NavLink className={s.userText} to="/auth/login">
+                <span style={{ marginRight: "-5px" }}>Login</span>
+              </NavLink>
+            </div>
+            <PiLineVertical size={24} color="var(--accent-color)" />
+            <div className={s.wrapper}>
+              <NavLink className={s.userText} to="/auth/registration">
+                <span style={{ marginLeft: "-5px" }}>Register</span>
+              </NavLink>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  if (isUserLogin) {
-    return (
-      <div className={s.userInfoSide}>
-        <div className={s.userWrapper}>
-          <RxDividerVertical
-            size={40}
-            style={{
-              color: "var(--border-color)",
-            }}
+      )}
+      {isUserLogin && (
+        <div className={s.userInfoSide}>
+          <div className={s.userBlock}>
+            {user.userAvatar !== null && (
+              <img
+                src={user.userAvatar}
+                alt="Userphoto"
+                className={s.userPhoto}
+              />
+            )}
+          </div>
+          <span className={s.userName}>{user.username}</span>
+          <PiLineVertical
+            size={24}
+            color="var(--accent-color)"
+            style={{ marginLeft: "-10px", marginRight: "-10px" }}
           />
-          <div className={s.wrapper}>
-            <BsEscape
-              size={25}
-              style={{
-                marginRight: "10px",
-                color: "var(--icons-color)",
-              }}
-            />
-            <Button
-              text="Вихід"
-              type="button"
-              onClick={onLogout}
-              btnClass="exitHeaderBtn"
-            />
-          </div>
+          <Button
+            text={"logout"}
+            type="button"
+            onClick={onLogout}
+            btnClass={"exitHeader"}
+          />
         </div>
-      </div>
-    );
-  }
+      )}
+    </>
+  );
 };
 
 export default AuthInfo;

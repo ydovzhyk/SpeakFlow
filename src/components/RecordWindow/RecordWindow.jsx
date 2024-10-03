@@ -198,7 +198,7 @@ const RecordWindow = () => {
       {displayType === "landscape" && (
         <div className={s.windowContentLandscape}>
           <div className={s.modePart}>
-            <div>
+            <div className={s.topPart}>
               <div className={s.nameAndAuth}>
                 <div className={s.namePart}>
                   <Logo />

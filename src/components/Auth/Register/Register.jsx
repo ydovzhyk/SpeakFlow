@@ -8,7 +8,6 @@ import { fields } from "../../Shared/TextField/fields";
 import TextField from "../../Shared/TextField/TextField";
 import Button from "../../Shared/Button/Button";
 import Text from "../../Shared/Text/Text";
-import avatarImage from "../../../images/Avatar/avatar.svg";
 import { FcGoogle } from "react-icons/fc";
 
 import s from "./Register.module.scss";
@@ -28,13 +27,10 @@ const Register = () => {
   useEffect(() => {
     const loadImage = async () => {
       try {
-        const response = await fetch(avatarImage);
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setUserAvatar(reader.result);
-        };
-        reader.readAsDataURL(blob);
+        const timestamp = new Date().getTime();
+        const avatarUrl = `https://robohash.org/${timestamp}.png?size=100x100`;
+
+        setUserAvatar(avatarUrl);
       } catch (error) {
         console.log("Error loading image:", error);
       }
@@ -105,8 +101,8 @@ const Register = () => {
                   message: "Name must have at least 2 characters",
                 },
                 maxLength: {
-                  value: 30,
-                  message: "Name must have no more than 30 characters",
+                  value: 15,
+                  message: "Name must have no more than 15 characters",
                 },
               }}
               render={({ field: { onChange, value }, fieldState }) => (

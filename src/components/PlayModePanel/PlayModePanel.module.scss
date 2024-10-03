@@ -54,8 +54,14 @@
     align-items: center;
     justify-items: center;
     border-radius: 50%;
-    border: 1px solid var(--main-color);
     cursor: pointer;
+
+    transition: box-shadow var(--transition-duration) var(--timing-function),
+      background-color var(--transition-duration) var(--timing-function),
+      color var(--transition-duration) var(--timing-function);
+    &:hover {
+      box-shadow: var(--hover-box-shadow);
+    }
   }
 
   &__icon {

@@ -4,7 +4,7 @@ export const fields = {
     name: "username",
     type: "text",
     placeholder: "User name",
-    title: "*The Name field must be more than 2 and less than 31 characters",
+    title: "*The Name field must be more than 2 and less than 15 characters",
     required: true,
   },
   email: {

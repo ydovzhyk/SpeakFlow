@@ -1,22 +1,32 @@
 @use "../../../styles/mixins";
 
 .btnDark {
+  margin: 0;
   width: 150px;
   height: 35px;
   background-color: var(--accent-color);
   border: 1px solid var(--accent-color);
   border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--main-color);
+  cursor: pointer;
+
+  transition: box-shadow var(--transition-duration) var(--timing-function),
+    background-color var(--transition-duration) var(--timing-function),
+    color var(--transition-duration) var(--timing-function);
+  &:hover {
+    background-color: var(--accent-hover-color);
+  }
+
   @include mixins.mq(tablet) {
     width: 175px;
   }
   @include mixins.mq(desktop) {
-    width: 190px;
+    width: 170px;
   }
-}
-
-.btnDark:hover {
-  background-color: --accent-hover-color;
-  border: 1px solid var(--accent-color);
 }
 
 .btnWrapper {
@@ -32,11 +42,14 @@
   height: 20px;
 }
 
-.btnText {
-  margin: 0px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1;
-  color: var(--main-color);
+.exitHeader {
+  font-weight: 600;
+  color: var(--accent-color);
+  background-color: transparent;
+  transition: box-shadow var(--transition-duration) var(--timing-function),
+    background-color var(--transition-duration) var(--timing-function),
+    color var(--transition-duration) var(--timing-function);
+  &:hover {
+    color: var(--accent-hover-color);
+  }
 }

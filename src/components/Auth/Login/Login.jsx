@@ -65,7 +65,7 @@ const Login = () => {
               <h2 className={s.title}>Registration</h2>
             </Link>
           </div>
-          <div>
+          <div className={s.googleBtnContainer}>
             <Text textClass="google-text" text={googleText} />
             <a href={`${REACT_APP_API_URL}/google`} className={s.googleBtn}>
               <FcGoogle size={24} />

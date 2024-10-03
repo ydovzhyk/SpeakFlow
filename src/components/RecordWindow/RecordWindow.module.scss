@@ -170,3 +170,9 @@
   width: 20px;
   height: 20px;
 }
+
+.topPart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
