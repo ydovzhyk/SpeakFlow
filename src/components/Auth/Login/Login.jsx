@@ -16,9 +16,10 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const currentOrigin = encodeURIComponent(window.location.origin);
-  const REACT_APP_API_URL =
-    "https://test-task-backend-34db7d47d9c8.herokuapp.com";
+  // const REACT_APP_API_URL =
+  //   "https://test-task-backend-34db7d47d9c8.herokuapp.com";
   // const REACT_APP_API_URL = "http://localhost:4000";
+  const REACT_APP_API_URL = "http://192.168.0.104:4000";
 
   const googleText =
     location.pathname === "/auth/login"
