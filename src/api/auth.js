@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const REACT_APP_API_URL = "http://localhost:4000";
-// const REACT_APP_API_URL =
-//   'https://middleway-backend-5929651d3ff1.herokuapp.com';
+// const REACT_APP_API_URL = "http://localhost:4000";
+const REACT_APP_API_URL =
+  "https://middleway-backend-5929651d3ff1.herokuapp.com";
 
 export const instance = axios.create({
   baseURL: REACT_APP_API_URL,
