@@ -16,3 +16,4 @@ export const getModalWindowStatus = ({ technical }) =>
   technical.modalWindowStatus;
 export const getPopUpWindowStatus = ({ technical }) =>
   technical.popUpWindowStatus;
+export const getServerUrl = ({ technical }) => technical.serverUrl;

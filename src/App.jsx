@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import UserRoutes from "./components/Routes/UserRoutes.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import CountdownCircle from "./components/Shared/CountdownCircle/CountdownCircle";
@@ -14,6 +15,7 @@ import "./styles/styles.scss"; //файл зі стилями треба під�
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isNotification = useSelector(getNotification);
   const isShowModal = useSelector(getModalWindowStatus);
 
@@ -24,6 +26,33 @@ function App() {
       dispatch(getCurrentUser());
     }
   }, [dispatch]);
+
+  //google auth
+  useEffect(() => {
+    const updateUserInfo = async (userData) => {
+      await localStorage.setItem(
+        "SpeakFlow.authData",
+        JSON.stringify(userData)
+      );
+      dispatch(getCurrentUser());
+    };
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("accessToken");
+    const refreshToken = urlParams.get("refreshToken");
+    const sid = urlParams.get("sid");
+
+    if (accessToken && refreshToken && sid) {
+      const userData = {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        sid: sid,
+      };
+      updateUserInfo(userData);
+      navigate("/");
+    } else {
+      return;
+    }
+  }, [dispatch, navigate]);
 
   return (
     <HelmetProvider>

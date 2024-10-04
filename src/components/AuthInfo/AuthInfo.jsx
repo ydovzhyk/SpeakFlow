@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import { PiLineVertical } from "react-icons/pi";
 
 import s from "./AuthInfo.module.scss";
@@ -10,6 +11,7 @@ import { logout } from "../../redux/auth/auth-operations";
 import Button from "../Shared/Button/Button";
 
 const AuthInfo = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useDispatch();
   const isUserLogin = useSelector(getLogin);
   const user = useSelector(getUser);
@@ -37,7 +39,7 @@ const AuthInfo = () => {
           </div>
         </div>
       )}
-      {isUserLogin && (
+      {isUserLogin && !isMobile && (
         <div className={s.userInfoSide}>
           <div className={s.userBlock}>
             {user.userAvatar !== null && (
@@ -54,6 +56,16 @@ const AuthInfo = () => {
             color="var(--accent-color)"
             style={{ marginLeft: "-10px", marginRight: "-10px" }}
           />
+          <Button
+            text={"logout"}
+            type="button"
+            onClick={onLogout}
+            btnClass={"exitHeader"}
+          />
+        </div>
+      )}
+      {isUserLogin && isMobile && (
+        <div className={s.userInfoSide}>
           <Button
             text={"logout"}
             type="button"

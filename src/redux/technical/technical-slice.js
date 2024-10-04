@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  serverURL: "http://localhost:4000",
+  // serverURL: "https://middleway-backend-5929651d3ff1.herokuapp.com",
   modalWindowStatus: false,
   popUpWindowStatus: false,
   error: null,

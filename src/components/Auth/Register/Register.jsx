@@ -17,7 +17,10 @@ const Register = () => {
   const dispatch = useDispatch();
   const [userAvatar, setUserAvatar] = useState(null);
 
-  const REACT_APP_API_URL = window.location.origin;
+  const currentOrigin = encodeURIComponent(window.location.origin);
+  // const REACT_APP_API_URL =
+  //   "https://test-task-backend-34db7d47d9c8.herokuapp.com";
+  const REACT_APP_API_URL = "http://localhost:4000";
 
   const googleText =
     location.pathname === "/auth/login"
@@ -85,7 +88,10 @@ const Register = () => {
           </div>
           <div className={s.googleBtnContainer}>
             <Text textClass="google-text" text={googleText} />
-            <a href={`${REACT_APP_API_URL}/google`} className={s.googleBtn}>
+            <a
+              href={`${REACT_APP_API_URL}/google?origin=${currentOrigin}`}
+              className={s.googleBtn}
+            >
               <FcGoogle size={24} />
               Google
             </a>

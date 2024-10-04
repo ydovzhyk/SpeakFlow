@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 import {
   getTextArray,
   getTextTranslatedArray,
@@ -9,6 +10,7 @@ import { getDisplay } from "../../redux/technical/technical-selectors";
 import s from "./TextView.module.scss";
 
 const TextView = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const textArray = useSelector(getTextArray);
   const displayType = useSelector(getDisplay);
   const textareaRef = useRef(null);
@@ -110,7 +112,7 @@ const TextView = () => {
         id="transcription-display"
         ref={textareaRef}
         className={s.windowText}
-        rows={displayType === "portrait" ? "8" : "12"}
+        rows={displayType === "portrait" || isMobile ? "8" : "12"}
         placeholder="Live transcription"
         value={typedText}
         onChange={(e) => handleTextChange(e.target.value, "first")}
@@ -119,7 +121,7 @@ const TextView = () => {
         id="transcription-transleted-display"
         ref={thirdTextareaRef}
         className={s.windowText}
-        rows={displayType === "portrait" ? "8" : "12"}
+        rows={displayType === "portrait" || isMobile ? "8" : "12"}
         placeholder="Live translation"
         value={translatedText}
         onChange={(e) => handleTextChange(e.target.value, "third")}
