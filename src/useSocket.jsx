@@ -14,9 +14,8 @@ import {
   getInputLanguage,
 } from "./redux/technical/technical-selectors";
 
-const serverURL = "http://localhost:4000";
-// const serverURL =
-//   "https://speechify-test-yd-server-4f435b1fac7b.herokuapp.com/";
+// const serverURL = "http://localhost:4000";
+const serverURL = "https://test-task-backend-34db7d47d9c8.herokuapp.com";
 
 const subscriptions = [
   "final",
