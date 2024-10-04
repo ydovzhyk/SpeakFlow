@@ -15,8 +15,7 @@ import {
 } from "./redux/technical/technical-selectors";
 
 // const serverURL = "http://localhost:4000";
-// const serverURL = "https://test-task-backend-34db7d47d9c8.herokuapp.com";
-const serverURL = "http://192.168.0.104:4000";
+const serverURL = "https://test-task-backend-34db7d47d9c8.herokuapp.com";
 
 const subscriptions = [
   "final",
