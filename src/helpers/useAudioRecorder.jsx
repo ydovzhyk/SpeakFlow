@@ -49,15 +49,11 @@ const useAudioRecorder = ({ dataCb }) => {
           audio: true,
         });
       } else {
-        console.log(
-          "getDisplayMedia не підтримується, захоплення тільки мікрофону"
-        );
         streamSpeaker = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
       }
     } catch (error) {
-      console.error("Помилка під час отримання потоку динаміка", error);
       return;
     }
 
