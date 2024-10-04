@@ -40,10 +40,33 @@ const useAudioRecorder = ({ dataCb }) => {
       await audioContext.current.resume();
     }
 
-    const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
-      video: true,
-      audio: true,
-    });
+    ////////////////////////////////////
+    let streamSpeaker;
+    try {
+      if (typeof navigator.mediaDevices.getDisplayMedia === "function") {
+        streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+          audio: true,
+        });
+      } else {
+        console.log(
+          "getDisplayMedia не підтримується, захоплення тільки мікрофону"
+        );
+        streamSpeaker = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+      }
+    } catch (error) {
+      console.error("Помилка під час отримання потоку динаміка", error);
+      return;
+    }
+
+    ///////////////////////////////////
+
+    // const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
+    //   video: true,
+    //   audio: true,
+    // });
 
     const streamMic = await navigator.mediaDevices.getUserMedia({
       audio: true,
