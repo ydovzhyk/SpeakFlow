@@ -112,7 +112,7 @@ const TextView = () => {
         id="transcription-display"
         ref={textareaRef}
         className={s.windowText}
-        rows={displayType === "portrait" || isMobile ? "8" : "12"}
+        rows={displayType === "portrait" ? "8" : isMobile ? "6" : "12"}
         placeholder="Live transcription"
         value={typedText}
         onChange={(e) => handleTextChange(e.target.value, "first")}
@@ -121,7 +121,7 @@ const TextView = () => {
         id="transcription-transleted-display"
         ref={thirdTextareaRef}
         className={s.windowText}
-        rows={displayType === "portrait" || isMobile ? "8" : "12"}
+        rows={displayType === "portrait" ? "8" : isMobile ? "6" : "12"}
         placeholder="Live translation"
         value={translatedText}
         onChange={(e) => handleTextChange(e.target.value, "third")}
