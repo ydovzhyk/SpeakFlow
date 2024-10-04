@@ -42,24 +42,20 @@ const useAudioRecorder = ({ dataCb }) => {
 
     ////////////////////////////////////
     let streamSpeaker;
+    function isMobileDevice() {
+      return /Mobi|Android/i.test(navigator.userAgent);
+    }
+
     try {
-      if (
-        navigator.mediaDevices &&
-        typeof navigator.mediaDevices.getDisplayMedia === "function"
-      ) {
+      if (!isMobileDevice()) {
         streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
           video: true,
           audio: true,
         });
-      } else if (
-        navigator.mediaDevices &&
-        typeof navigator.mediaDevices.getUserMedia === "function"
-      ) {
+      } else {
         streamSpeaker = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
-      } else {
-        throw new Error("Не підтримується жоден метод для захоплення медіа");
       }
     } catch (error) {
       console.error("Помилка доступу до медіа:", error);
