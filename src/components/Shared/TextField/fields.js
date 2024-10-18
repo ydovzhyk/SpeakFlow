@@ -24,4 +24,16 @@ export const fields = {
       "*The Password field must be more than 2 and less than 21 characters",
     required: true,
   },
+  search: {
+    name: "search",
+    type: "text",
+    title: "",
+    required: false,
+  },
+  keyword: {
+    name: "keyword",
+    type: "text",
+    title: "",
+    required: false,
+  },
 };

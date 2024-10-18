@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import auth from "./auth/auth-slice";
 import technical from "./technical/technical-slice";
+import textData from "./textData/textData-slice";
 
 const persistConfig = {
   key: "auth-sid",
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
     technical: technical,
+    textData: textData,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

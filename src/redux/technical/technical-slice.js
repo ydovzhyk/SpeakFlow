@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  serverURL: "http://localhost:4000",
-  // serverURL: "https://middleway-backend-5929651d3ff1.herokuapp.com",
   modalWindowStatus: false,
   popUpWindowStatus: false,
+  saveTextPanelStatus: false,
   error: null,
   message: null,
   textArray: [],
@@ -15,6 +14,7 @@ const initialState = {
   line: "speaker",
   display: "portrait",
   activeBtn: "stop",
+  openBtn: false,
   deepgramStatus: false,
   targetLanguage: "Ukrainian",
   inputLanguage: "en",
@@ -24,6 +24,12 @@ const technical = createSlice({
   name: "technical",
   initialState,
   reducers: {
+    setSaveTextPanelStatus: (store, action) => {
+      store.saveTextPanelStatus = action.payload;
+    },
+    setOpenBtn: (store, action) => {
+      store.openBtn = action.payload;
+    },
     setModalWindowStatus: (store, action) => {
       store.modalWindowStatus = action.payload;
     },
@@ -41,6 +47,12 @@ const technical = createSlice({
     },
     addSentenceTranslated: (store, action) => {
       store.textTranslatedArray.push(action.payload);
+    },
+    setSentenceTranscript: (store, action) => {
+      store.textArray = action.payload;
+    },
+    setSentenceTranslated: (store, action) => {
+      store.textTranslatedArray = action.payload;
     },
     setNotifacation: (store, action) => {
       store.notification = action.payload;
@@ -96,4 +108,8 @@ export const {
   setDeepgramStatus,
   setTargetLanguage,
   setInputLanguage,
+  setOpenBtn,
+  setSaveTextPanelStatus,
+  setSentenceTranslated,
+  setSentenceTranscript,
 } = technical.actions;

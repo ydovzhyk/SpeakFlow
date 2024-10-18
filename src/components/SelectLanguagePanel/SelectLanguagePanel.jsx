@@ -8,8 +8,6 @@ import {
   getInputLanguage,
   getTargetLanguage,
 } from "../../redux/technical/technical-selectors";
-// import input from "../../images/input.png";
-// import output from "../../images/output.png";
 
 import s from "./SelectLanguagePanel.module.scss";
 

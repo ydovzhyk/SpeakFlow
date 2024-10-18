@@ -1,52 +1,16 @@
 @use "../../styles/mixins";
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  55% {
-    opacity: 0.9;
-  }
-  60% {
-    opacity: 0.8;
-  }
-  65% {
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.6;
-  }
-  75% {
-    opacity: 0.5;
-  }
-  80% {
-    opacity: 0.4;
-  }
-  85% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.2;
-  }
-  95% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 
 .playMode {
-  border-radius: 20px;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 20px;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+  }
 
   &__iconWrapper {
     display: flex;
@@ -55,35 +19,26 @@
     justify-items: center;
     border-radius: 50%;
     cursor: pointer;
-
-    transition: box-shadow var(--transition-duration) var(--timing-function),
-      background-color var(--transition-duration) var(--timing-function),
-      color var(--transition-duration) var(--timing-function);
-    &:hover {
-      box-shadow: var(--hover-box-shadow);
-    }
-  }
-
-  &__icon {
-    width: 35px;
-    height: 35px;
   }
 }
 
-.recordingButton {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: var(--recording-btn-color);
-  animation: blink 2s infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.recBtnWrapper {
+  position: relative;
+  width: 39.89px;
+  height: 27px;
+  overflow: hidden;
 }
 
-.recordingText {
-  font-family: "Roboto", sans-serif;
-  font-weight: 200;
-  font-size: 10px;
-  color: var(--main-color);
+.playMode__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+}
+
+.playMode__icon.show {
+  opacity: 1;
 }

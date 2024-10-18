@@ -48,6 +48,7 @@ const TextView = () => {
   const textTranslatedArray = useSelector(getTextTranslatedArray);
   const thirdTextareaRef = useRef(null);
   const [translatedText, setTranslatedText] = useState("");
+
   const animationTranslatedRef = useRef({
     currentText: "",
     wordQueue: [],

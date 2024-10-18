@@ -1,0 +1,54 @@
+@use '../../../styles/mixins';
+
+.paginationSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pagesSet {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pageBox {
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--accent-color);
+  color: var(--icons-color);
+  background-color: var(--bg-footer-header);
+  margin-right: 7px;
+  cursor: pointer;
+  &:hover {
+    background-color: #eff0ee;
+    border: 1px solid #929292;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.pageBox:last-child {
+  margin-right: 0px;
+}
+
+.active {
+  width: 26px;
+  height: 26px;
+  margin-right: 7px;
+  border: 1px solid var(--accent-color);
+  background-color: var(--accent-color);
+  color: azure;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.active:last-child {
+  margin-right: 0px;
+}
+
+.btnLeft {
+  margin-right: 10px;
+}
+.btnRight {
+  margin-left: 10px;
+}

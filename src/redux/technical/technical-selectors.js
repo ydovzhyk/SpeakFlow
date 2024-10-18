@@ -16,4 +16,6 @@ export const getModalWindowStatus = ({ technical }) =>
   technical.modalWindowStatus;
 export const getPopUpWindowStatus = ({ technical }) =>
   technical.popUpWindowStatus;
-export const getServerUrl = ({ technical }) => technical.serverUrl;
+export const getOpenBtn = ({ technical }) => technical.openBtn;
+export const getSaveTextPanelStatus = ({ technical }) =>
+  technical.saveTextPanelStatus;

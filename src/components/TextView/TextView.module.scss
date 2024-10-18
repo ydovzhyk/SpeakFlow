@@ -20,3 +20,8 @@
   line-height: 1.5;
   border: 1px solid var(--accent-color);
 }
+
+.windowText:focus {
+  outline: none;
+  border: 1px solid var(--accent-color);
+}

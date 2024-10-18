@@ -10,6 +10,10 @@ import {
   clearUserError,
 } from "../../../redux/auth/auth-slice";
 import {
+  clearTextDataError,
+  clearTextDataMessage,
+} from "../../../redux/textData/textData-slice";
+import {
   getMessageAuth,
   getErrorAuth,
 } from "../../../redux/auth/auth-selectors";
@@ -17,6 +21,11 @@ import {
   getMessageTechnical,
   getErrorTechnical,
 } from "../../../redux/technical/technical-selectors";
+import {
+  getMessageTextData,
+  getErrorTextData,
+} from "../../../redux/textData/textDate-selectors";
+
 import { TfiClose } from "react-icons/tfi";
 import s from "./ModalWindow.module.scss";
 
@@ -25,8 +34,10 @@ const ModalWindow = () => {
   const dispatch = useDispatch();
   const messageAuth = useSelector(getMessageAuth);
   const messageTechnical = useSelector(getMessageTechnical);
+  const messageTextData = useSelector(getMessageTextData);
   const errorAuth = useSelector(getErrorAuth);
   const errorTechnical = useSelector(getErrorTechnical);
+  const errorTextData = useSelector(getErrorTextData);
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -34,6 +45,8 @@ const ModalWindow = () => {
         dispatch(setModalWindowStatus(false));
         dispatch(clearTechnicalError());
         dispatch(clearTechnicalMessage());
+        dispatch(clearTextDataError());
+        dispatch(clearTextDataMessage());
         dispatch(clearUserError());
         dispatch(clearUserMessage());
       }
@@ -43,6 +56,8 @@ const ModalWindow = () => {
       dispatch(setModalWindowStatus(false));
       dispatch(clearTechnicalError());
       dispatch(clearTechnicalMessage());
+      dispatch(clearTextDataError());
+      dispatch(clearTextDataMessage());
       dispatch(clearUserError());
       dispatch(clearUserMessage());
     }, 10000);
@@ -59,6 +74,8 @@ const ModalWindow = () => {
     dispatch(setModalWindowStatus(false));
     dispatch(clearTechnicalError());
     dispatch(clearTechnicalMessage());
+    dispatch(clearTextDataError());
+    dispatch(clearTextDataMessage());
     dispatch(clearUserError());
     dispatch(clearUserMessage());
   };
@@ -72,17 +89,29 @@ const ModalWindow = () => {
         <div className={s.face} id="face"></div>
       </div>
       <div className={s.shadow}></div>
-      {(errorAuth || errorTechnical) && (
+      {(errorAuth || errorTechnical || errorTextData) && (
         <>
           <p className={s.window__title}>Ox...</p>
           <p className={s.window__text}>
-            {`${errorAuth ? errorAuth : errorTechnical}`}
+            {`${
+              errorAuth
+                ? errorAuth
+                : errorTechnical
+                ? errorTechnical
+                : errorTextData
+            }`}
           </p>
         </>
       )}
-      {(messageAuth || messageTechnical) && (
+      {(messageAuth || messageTechnical || messageTextData) && (
         <p className={s.window__text}>
-          {`${messageAuth ? messageAuth : messageTechnical}`}
+          {`${
+            messageAuth
+              ? messageAuth
+              : messageTechnical
+              ? messageTechnical
+              : messageTextData
+          }`}
         </p>
       )}
     </div>

@@ -18,11 +18,11 @@ import {
   changeLine,
   changeDisplay,
   setPopUpWindowStatus,
+  setSaveTextPanelStatus,
   // clearTextArray,
 } from "../../redux/technical/technical-slice";
 import { getLogin } from "../../redux/auth/auth-selectors";
 import TextView from "../TextView";
-import Toggle from "../Shared/Toggle/Toggle";
 import PlayModePanel from "../PlayModePanel/PlayModePanel";
 import SelectLanguagePanel from "../SelectLanguagePanel/SelectLanguagePanel";
 import Logo from "../Shared/logo/logo";
@@ -34,6 +34,8 @@ import speaker from "../../images/speaker.png";
 import Button from "../Shared/Button";
 import AuthInfo from "../AuthInfo";
 import Popup from "../Shared/Popup/Popup";
+import TextDataPanel from "../TextDataPanel";
+import SaveTextPanel from "../SaveTextPanel";
 
 import s from "./RecordWindow.module.scss";
 
@@ -108,9 +110,8 @@ const RecordWindow = () => {
   };
 
   const handleSave = async () => {
-    console.log("Реєструємо клік");
     if (isLogin) {
-      console.log("Все ок");
+      dispatch(setSaveTextPanelStatus(true));
     } else {
       dispatch(setPopUpWindowStatus(true));
     }
@@ -163,19 +164,24 @@ const RecordWindow = () => {
                 }}
               />
             </div>
-            <Popup
-              message="To save your text, you need to register or log in to your account."
-              isVisible={isPopupVisible}
-              onClose={() => dispatch(setPopUpWindowStatus(false))}
-            />
+            <div className={s.panelWrapper}>
+              <Popup
+                message="To save your text, you need to register or log in to your account."
+                isVisible={isPopupVisible && !isLogin ? true : false}
+                onClose={() => dispatch(setPopUpWindowStatus(false))}
+              />
+            </div>
+            <div className={s.panelWrapper}>
+              <SaveTextPanel />
+            </div>
+            <div className={s.panelWrapper}>
+              <TextDataPanel />
+            </div>
           </div>
           <TextView />
           <div className={s.settingsWrapper}>
             <SelectLanguagePanel />
-            <div className={s.playModeWrapper}>
-              <PlayModePanel handleChange={handleActiveBtnChange} />
-              {isDesctop && <Toggle />}
-            </div>
+            <PlayModePanel handleChange={handleActiveBtnChange} />
             <div className={s.btnWrapper}>
               <Button
                 id="reset-button"
@@ -238,17 +244,14 @@ const RecordWindow = () => {
                 </div>
                 <Popup
                   message="To save your text, you need to register or log in to your account."
-                  isVisible={isPopupVisible}
+                  isVisible={isPopupVisible && !isLogin ? true : false}
                   onClose={() => dispatch(setPopUpWindowStatus(false))}
                 />
               </div>
             </div>
             <div className={s.settingsWrapper}>
               <SelectLanguagePanel />
-              <div className={s.playModeWrapper}>
-                <PlayModePanel handleChange={handleActiveBtnChange} />
-                <Toggle />
-              </div>
+              <PlayModePanel handleChange={handleActiveBtnChange} />
               <div className={s.btnWrapper}>
                 <Button
                   id="reset-button"

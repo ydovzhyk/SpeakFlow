@@ -40,34 +40,16 @@ const useAudioRecorder = ({ dataCb }) => {
       await audioContext.current.resume();
     }
 
-    ////////////////////////////////////
-    let streamSpeaker;
     function isMobileDevice() {
       return /Mobi|Android/i.test(navigator.userAgent);
     }
 
-    try {
-      if (!isMobileDevice()) {
-        streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: true,
-        });
-      } else {
-        streamSpeaker = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-      }
-    } catch (error) {
-      console.error("Помилка доступу до медіа:", error);
-      return;
-    }
+    console.log(isMobileDevice());
 
-    ///////////////////////////////////
-
-    // const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
-    //   video: true,
-    //   audio: true,
-    // });
+    const streamSpeaker = await navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: true,
+    });
 
     const streamMic = await navigator.mediaDevices.getUserMedia({
       audio: true,
